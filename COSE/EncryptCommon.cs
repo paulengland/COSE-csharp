@@ -231,7 +231,7 @@ namespace Com.AugustCellars.COSE
             }
             else {
                 s_PRNG.NextBytes(IV);
-                AddAttribute(HeaderKeys.IV, CBORObject.FromObject(IV), UNPROTECTED);
+                AddAttribute(HeaderKeys.IV, CBORObject.FromByteArray(IV), UNPROTECTED);
             }
 
             if (K == null) {
@@ -379,7 +379,7 @@ namespace Com.AugustCellars.COSE
             }
             else {
                 s_PRNG.NextBytes(IV);
-                AddAttribute(HeaderKeys.IV, CBORObject.FromObject(IV), UNPROTECTED);
+                AddAttribute(HeaderKeys.IV, CBORObject.FromByteArray(IV), UNPROTECTED);
             }
 
             if (K == null) {
@@ -476,7 +476,7 @@ namespace Com.AugustCellars.COSE
             }
             else {
                 s_PRNG.NextBytes(IV);
-                AddAttribute(HeaderKeys.IV, CBORObject.FromObject(IV), UNPROTECTED);
+                AddAttribute(HeaderKeys.IV, CBORObject.FromByteArray(IV), UNPROTECTED);
             }
 
             if (K == null)
@@ -604,7 +604,7 @@ namespace Com.AugustCellars.COSE
 
             obj.Add(ProtectedBytes);
         
-            obj.Add(CBORObject.FromObject(ExternalData));
+            obj.Add(CBORObject.FromByteArray(ExternalData));
 
             // Console.WriteLine("COSE AAD = " + BitConverter.ToString(obj.EncodeToBytes()));
 

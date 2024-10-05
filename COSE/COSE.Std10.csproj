@@ -1,7 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;net462;netcoreapp2.0</TargetFrameworks>
+    <TargetFrameworks>net9.0</TargetFrameworks>
     <PackageId>Com.AugustCellars.COSE</PackageId>
     <Id>Com.AugustCellars.COSE</Id>
     <PackageVersion>1.6.0</PackageVersion>
@@ -12,7 +11,6 @@
     <Copyright>Copyright @2016-9 Jim Schaad</Copyright>
     <PackageTags>COSE CBOR</PackageTags>
     <PackageLicenseExpression>EPL-2.0</PackageLicenseExpression>
-    
     <PackageReleaseNotes>
 1.6.0
   - Update to use CBOR version 4.0 due to a security parsing problem.
@@ -53,10 +51,8 @@
 1.0.0
   * Name space has been changed from COSE to Com.AugustCellars.COSE
     </PackageReleaseNotes>
-    
     <Configurations>Debug;Release;Deploy</Configurations>
   </PropertyGroup>
-
   <PropertyGroup>
     <EnableDefaultItems>false</EnableDefaultItems>
     <AssemblyName>COSE</AssemblyName>
@@ -74,10 +70,8 @@
     <DefineConstants>TRACE;DEBUG;NETSTANDARD1_0;FOR_EXAMPLES</DefineConstants>
     <DefineConstants>TRACE;DEBUG;NETSTANDARD1_0; FOR_EXAMPLES</DefineConstants>
   </PropertyGroup>
-  
-
   <ItemGroup>
-    <PackageReference Include="PeterO.Cbor" Version="4.0.0" />
+    <PackageReference Include="PeterO.Cbor" Version="5.0.0-alpha2" />
     <PackageReference Include="Portable.BouncyCastle" Version="1.8.5" />
   </ItemGroup>
   <ItemGroup>
@@ -102,5 +96,4 @@
   <ItemGroup>
     <None Include="AugustCellarsStrongKey.snk" />
   </ItemGroup>
-  
 </Project>

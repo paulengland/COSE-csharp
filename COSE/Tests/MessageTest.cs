@@ -24,7 +24,7 @@ namespace Com.AugustCellars.COSE.Tests
         {
             Encrypt0Message msg = new Encrypt0Message(false, true);
             msg.AddAttribute(HeaderKeys.Algorithm, AlgorithmValues.AES_GCM_128, Attributes.PROTECTED);
-            msg.AddAttribute(HeaderKeys.IV, CBORObject.FromObject(rgbIV96), Attributes.PROTECTED);
+            msg.AddAttribute(HeaderKeys.IV, CBORObject.FromByteArray(rgbIV96), Attributes.PROTECTED);
             msg.SetContent(rgbContent);
             msg.Encrypt(rgbKey128);
             byte[] rgbMsg = msg.EncodeToBytes();
@@ -42,7 +42,7 @@ namespace Com.AugustCellars.COSE.Tests
         {
             Encrypt0Message msg = new Encrypt0Message(true, false);
             msg.AddAttribute(HeaderKeys.Algorithm, AlgorithmValues.AES_GCM_128, Attributes.PROTECTED);
-            msg.AddAttribute(HeaderKeys.IV, CBORObject.FromObject(rgbIV96), Attributes.PROTECTED);
+            msg.AddAttribute(HeaderKeys.IV, CBORObject.FromByteArray(rgbIV96), Attributes.PROTECTED);
             msg.SetContent(rgbContent);
             msg.Encrypt(rgbKey128);
             byte[] rgbMsg = msg.EncodeToBytes();

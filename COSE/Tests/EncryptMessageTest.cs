@@ -27,7 +27,7 @@ namespace Com.AugustCellars.COSE.Tests
             recipient128.AddAttribute(HeaderKeys.Algorithm, AlgorithmValues.Direct, Attributes.UNPROTECTED);
             CBORObject key128 = CBORObject.NewMap();
             key128.Add(CoseKeyKeys.KeyType, GeneralValues.KeyType_Octet);
-            key128.Add(CoseKeyParameterKeys.Octet_k, CBORObject.FromObject(rgbKey128));
+            key128.Add(CoseKeyParameterKeys.Octet_k, CBORObject.FromByteArray(rgbKey128));
             cnKey128 = new OneKey(key128);
             recipient128.SetKey(cnKey128);
         }
@@ -40,7 +40,7 @@ namespace Com.AugustCellars.COSE.Tests
         {
             EncryptMessage msg = new EncryptMessage();
             msg.AddAttribute(HeaderKeys.Algorithm, AlgorithmValues.AES_GCM_128, Attributes.PROTECTED);
-            msg.AddAttribute(HeaderKeys.IV, CBORObject.FromObject(rgbIV96), Attributes.PROTECTED);
+            msg.AddAttribute(HeaderKeys.IV, CBORObject.FromByteArray(rgbIV96), Attributes.PROTECTED);
             msg.SetContent(rgbContent);
             msg.AddRecipient(recipient128);
             msg.Encrypt();
@@ -63,7 +63,7 @@ namespace Com.AugustCellars.COSE.Tests
         {
             EncryptMessage msg = new EncryptMessage();
             msg.AddAttribute(HeaderKeys.Algorithm, AlgorithmValues.AES_GCM_128, Attributes.PROTECTED);
-            msg.AddAttribute(HeaderKeys.IV, CBORObject.FromObject(rgbIV96), Attributes.PROTECTED);
+            msg.AddAttribute(HeaderKeys.IV, CBORObject.FromByteArray(rgbIV96), Attributes.PROTECTED);
             msg.SetContent(rgbContent);
             msg.AddRecipient(recipient128);
             msg.Encrypt();
@@ -85,7 +85,7 @@ namespace Com.AugustCellars.COSE.Tests
         {
             EncryptMessage msg = new EncryptMessage();
             msg.AddAttribute(HeaderKeys.Algorithm, AlgorithmValues.AES_GCM_128, Attributes.PROTECTED);
-            msg.AddAttribute(HeaderKeys.IV, CBORObject.FromObject(rgbIV96), Attributes.PROTECTED);
+            msg.AddAttribute(HeaderKeys.IV, CBORObject.FromByteArray(rgbIV96), Attributes.PROTECTED);
             msg.SetContent(rgbContent);
             msg.AddRecipient(recipient128);
             msg.Encrypt();
@@ -107,7 +107,7 @@ namespace Com.AugustCellars.COSE.Tests
         {
             EncryptMessage msg = new EncryptMessage();
             msg.AddAttribute(HeaderKeys.Algorithm, AlgorithmValues.AES_GCM_128, Attributes.PROTECTED);
-            msg.AddAttribute(HeaderKeys.IV, CBORObject.FromObject(rgbIV96), Attributes.PROTECTED);
+            msg.AddAttribute(HeaderKeys.IV, CBORObject.FromByteArray(rgbIV96), Attributes.PROTECTED);
             msg.SetContent(rgbContent);
             msg.AddRecipient(recipient128);
             msg.Encrypt();
@@ -168,7 +168,7 @@ namespace Com.AugustCellars.COSE.Tests
             EncryptMessage msg = new EncryptMessage();
             msg.AddRecipient(recipient128);
 
-            msg.AddAttribute(HeaderKeys.Algorithm, CBORObject.FromObject("Unknown"), Attributes.PROTECTED);
+            msg.AddAttribute(HeaderKeys.Algorithm, CBORObject.FromString("Unknown"), Attributes.PROTECTED);
             msg.SetContent(rgbContent);
             CoseException e = Assert.ThrowsException<CoseException>(() =>
                 msg.Encrypt());
@@ -207,7 +207,7 @@ namespace Com.AugustCellars.COSE.Tests
             msg.AddRecipient(recipient128);
 
             msg.AddAttribute(HeaderKeys.Algorithm, AlgorithmValues.AES_GCM_128, Attributes.PROTECTED);
-            msg.AddAttribute(HeaderKeys.IV, CBORObject.FromObject("IV"), Attributes.UNPROTECTED);
+            msg.AddAttribute(HeaderKeys.IV, CBORObject.FromString("IV"), Attributes.UNPROTECTED);
             msg.SetContent(rgbContent);
             CoseException e = Assert.ThrowsException<CoseException>(() =>
                 msg.Encrypt());
@@ -221,7 +221,7 @@ namespace Com.AugustCellars.COSE.Tests
             msg.AddRecipient(recipient128);
 
             msg.AddAttribute(HeaderKeys.Algorithm, AlgorithmValues.AES_GCM_128, Attributes.PROTECTED);
-            msg.AddAttribute(HeaderKeys.IV, CBORObject.FromObject(rgbIV128), Attributes.UNPROTECTED);
+            msg.AddAttribute(HeaderKeys.IV, CBORObject.FromByteArray(rgbIV128), Attributes.UNPROTECTED);
             msg.SetContent(rgbContent);
             CoseException e = Assert.ThrowsException<CoseException>(() =>
                 msg.Encrypt());
@@ -272,7 +272,7 @@ namespace Com.AugustCellars.COSE.Tests
         public void EncryptDecodeBadProtected2()
         {
             CBORObject obj = CBORObject.NewArray();
-            obj.Add(CBORObject.FromObject(CBORObject.False));
+            obj.Add(CBORObject.False);
             obj.Add(CBORObject.False);
             obj.Add(CBORObject.False);
             obj.Add(CBORObject.False);
@@ -287,7 +287,7 @@ namespace Com.AugustCellars.COSE.Tests
         public void EncryptDecodeBadUnprotected()
         {
             CBORObject obj = CBORObject.NewArray();
-            obj.Add(CBORObject.FromObject(CBORObject.NewArray()).EncodeToBytes());
+            obj.Add(CBORObject.NewArray().EncodeToBytes());
             obj.Add(CBORObject.False);
             obj.Add(CBORObject.False);
             obj.Add(CBORObject.False);
@@ -302,7 +302,7 @@ namespace Com.AugustCellars.COSE.Tests
         public void EncryptDecodeBadContent()
         {
             CBORObject obj = CBORObject.NewArray();
-            obj.Add(CBORObject.FromObject(CBORObject.NewArray()).EncodeToBytes());
+            obj.Add(CBORObject.NewArray().EncodeToBytes());
             obj.Add(CBORObject.NewMap());
             obj.Add(CBORObject.False);
             obj.Add(CBORObject.False);
@@ -317,7 +317,7 @@ namespace Com.AugustCellars.COSE.Tests
         public void EncryptDecodeBadRecipients()
         {
             CBORObject obj = CBORObject.NewArray();
-            obj.Add(CBORObject.FromObject(CBORObject.NewArray()).EncodeToBytes());
+            obj.Add(CBORObject.NewArray().EncodeToBytes());
             obj.Add(CBORObject.NewMap());
             obj.Add(new byte[0]);
             obj.Add(CBORObject.False);

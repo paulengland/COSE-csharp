@@ -78,7 +78,7 @@ namespace Com.AugustCellars.COSE.Tests
         public void signerDecodeBadProtected2()
         {
             CBORObject obj = CBORObject.NewArray();
-            obj.Add(CBORObject.FromObject(CBORObject.False));
+            obj.Add(CBORObject.False);
             obj.Add(CBORObject.False);
             obj.Add(CBORObject.False);
 
@@ -93,7 +93,7 @@ namespace Com.AugustCellars.COSE.Tests
         public void signerDecodeBadUnprotected()
         {
             CBORObject obj = CBORObject.NewArray();
-            obj.Add(CBORObject.FromObject(CBORObject.NewArray()).EncodeToBytes());
+            obj.Add(CBORObject.NewArray().EncodeToBytes());
             obj.Add(CBORObject.False);
             obj.Add(CBORObject.False);
 
@@ -108,7 +108,7 @@ namespace Com.AugustCellars.COSE.Tests
         public void signerDecodeBadSignature()
         {
             CBORObject obj = CBORObject.NewArray();
-            obj.Add(CBORObject.FromObject(CBORObject.NewArray()).EncodeToBytes());
+            obj.Add(CBORObject.NewArray().EncodeToBytes());
             obj.Add(CBORObject.NewMap());
             obj.Add(CBORObject.False);
 

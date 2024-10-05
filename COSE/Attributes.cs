@@ -74,7 +74,7 @@ namespace Com.AugustCellars.COSE
         /// <param name="bucket">Which bucket is the attribute placed in?</param>
         public void AddAttribute(string label, string value, int bucket)
         {
-            AddAttribute(CBORObject.FromObject(label), CBORObject.FromObject(value), bucket);
+            AddAttribute(CBORObject.FromString(label), CBORObject.FromString(value), bucket);
         }
 
         /// <summary>
@@ -86,7 +86,7 @@ namespace Com.AugustCellars.COSE
         /// <param name="bucket">Which bucket is the attribute placed in?</param>
         public void AddAttribute(string label, CBORObject value, int bucket)
         {
-            AddAttribute(CBORObject.FromObject(label), value, bucket);
+            AddAttribute(CBORObject.FromString(label), value, bucket);
         }
 
         /// <summary>
@@ -210,7 +210,7 @@ namespace Com.AugustCellars.COSE
         /// <returns></returns>
         public CBORObject FindAttribute(int label)
         {
-            return FindAttribute(CBORObject.FromObject(label));
+            return FindAttribute(CBORObject.FromInt32(label));
         }
 
         /// <summary>
@@ -221,7 +221,7 @@ namespace Com.AugustCellars.COSE
         /// <returns></returns>
         public CBORObject FindAttribute(string label)
         {
-            return FindAttribute(CBORObject.FromObject(label));
+            return FindAttribute(CBORObject.FromString(label));
         }
 
         /// <summary>

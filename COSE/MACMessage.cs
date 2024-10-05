@@ -631,8 +631,8 @@ public virtual void Compute()
                 else ProtectedBytes = new byte[0];
             }
             obj.Add(ProtectedBytes);
-            if (ExternalData != null) obj.Add(CBORObject.FromObject(ExternalData));
-            else obj.Add(CBORObject.FromObject(new byte[0]));
+            if (ExternalData != null) obj.Add(CBORObject.FromByteArray(ExternalData));
+            else obj.Add(CBORObject.FromByteArray(new byte[0]));
             obj.Add(rgbContent);
 
             return obj.EncodeToBytes();

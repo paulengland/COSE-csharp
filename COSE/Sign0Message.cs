@@ -33,17 +33,17 @@ namespace Com.AugustCellars.COSE
             CBORObject objX = EncodeToCBORObject();
             CBORObject obj = CBORObject.NewMap();
 
-            if (objX[2] != null) obj[CBORObject.FromObject(1)] = objX[2];
+            if (objX[2] != null) obj[CBORObject.FromInt32(1)] = objX[2];
             if (objX[3] != null) {
                 CBORObject obj3 = CBORObject.NewArray();
-                obj[CBORObject.FromObject(2)] = obj3;
+                obj[CBORObject.FromInt32(2)] = obj3;
                 for (int i = 0; i < objX[3].Count; i++) {
                     CBORObject obj2 = CBORObject.NewMap();
                     obj3.Add(obj2);
-                    obj2[CBORObject.FromObject(3)] = objX[3][i][2];
-                    obj2[CBORObject.FromObject(4)] = objX[3][i][1];
+                    obj2[CBORObject.FromInt32(3)] = objX[3][i][2];
+                    obj2[CBORObject.FromInt32(4)] = objX[3][i][1];
                     if (objX[3][i][0] != null) {
-                        obj2[CBORObject.FromObject(5)] = objX[3][i][0];
+                        obj2[CBORObject.FromInt32(5)] = objX[3][i][0];
                     }
                 }
             }
@@ -151,10 +151,10 @@ namespace Com.AugustCellars.COSE
 
         public void PerformSignature()
         {
-            CBORObject cborProtected = CBORObject.FromObject(new byte[0]);
+            CBORObject cborProtected = CBORObject.FromByteArray(new byte[0]);
             if ((ProtectedMap != null) && (ProtectedMap.Count > 0)) {
                 byte[] rgb = ProtectedMap.EncodeToBytes();
-                cborProtected = CBORObject.FromObject(rgb);
+                cborProtected = CBORObject.FromByteArray(rgb);
             }
 
             if (_rgbSignature == null) {
@@ -174,10 +174,10 @@ namespace Com.AugustCellars.COSE
 
         private byte[] toBeSigned()
         {
-            CBORObject cborProtected = CBORObject.FromObject(new byte[0]);
+            CBORObject cborProtected = CBORObject.FromByteArray(new byte[0]);
             if ((ProtectedMap != null) && (ProtectedMap.Count > 0)) {
                 byte[] rgb = ProtectedMap.EncodeToBytes();
-                cborProtected = CBORObject.FromObject(rgb);
+                cborProtected = CBORObject.FromByteArray(rgb);
             }
 
             CBORObject signObj = CBORObject.NewArray();
@@ -226,7 +226,7 @@ namespace Com.AugustCellars.COSE
                         else if (_keyToSign[CoseKeyParameterKeys.EC_Curve].Type == CBORType.TextString) {
                             switch (_keyToSign[CoseKeyParameterKeys.EC_Curve].AsString()) {
                             case "P-384":
-                                alg = CBORObject.FromObject("ES384");
+                                alg = CBORObject.FromString("ES384");
                                 break;
 
                             default:
@@ -415,7 +415,7 @@ namespace Com.AugustCellars.COSE
                     HashSig sig = new HashSig(_keyToSign[CoseKeyParameterKeys.Lms_Private].AsString());
                     byte[] signBytes = sig.Sign(bytesToBeSigned);
 
-                    _keyToSign.Replace(CoseKeyParameterKeys.Lms_Private, CBORObject.FromObject(sig.PrivateKey));
+                    _keyToSign.Replace(CoseKeyParameterKeys.Lms_Private, CBORObject.FromString(sig.PrivateKey));
                     return signBytes;
 
                     default:

@@ -28,7 +28,7 @@ namespace Com.AugustCellars.COSE.Tests
 
             CBORObject cnKey = CBORObject.NewMap();
             cnKey.Add(CoseKeyKeys.KeyType, GeneralValues.KeyType_Octet);
-            cnKey.Add(CoseKeyParameterKeys.Octet_k, CBORObject.FromObject(rgbKey256));
+            cnKey.Add(CoseKeyParameterKeys.Octet_k, CBORObject.FromByteArray(rgbKey256));
             cnKey256 = new OneKey(cnKey);
         }
 
@@ -68,7 +68,7 @@ namespace Com.AugustCellars.COSE.Tests
         {
             MAC0Message msg = new MAC0Message();
 
-            msg.AddAttribute(HeaderKeys.Algorithm, CBORObject.FromObject("Unknown"), Attributes.PROTECTED);
+            msg.AddAttribute(HeaderKeys.Algorithm, CBORObject.FromString("Unknown"), Attributes.PROTECTED);
             msg.SetContent(rgbContent);
             CoseException e = Assert.ThrowsException<CoseException>(() =>
                 msg.Compute(rgbKey256));
@@ -140,7 +140,7 @@ namespace Com.AugustCellars.COSE.Tests
         public void macDecodeBadProtected2()
         {
             CBORObject obj = CBORObject.NewArray();
-            obj.Add(CBORObject.FromObject(CBORObject.False));
+            obj.Add(CBORObject.False);
             obj.Add(CBORObject.False);
             obj.Add(CBORObject.False);
             obj.Add(CBORObject.False);
@@ -155,7 +155,7 @@ namespace Com.AugustCellars.COSE.Tests
         public void macDecodeBadUnprotected()
         {
             CBORObject obj = CBORObject.NewArray();
-            obj.Add(CBORObject.FromObject(CBORObject.NewArray()).EncodeToBytes());
+            obj.Add(CBORObject.NewArray().EncodeToBytes());
             obj.Add(CBORObject.False);
             obj.Add(CBORObject.False);
             obj.Add(CBORObject.False);
@@ -170,7 +170,7 @@ namespace Com.AugustCellars.COSE.Tests
         public void macDecodeBadContent()
         {
             CBORObject obj = CBORObject.NewArray();
-            obj.Add(CBORObject.FromObject(CBORObject.NewArray()).EncodeToBytes());
+            obj.Add(CBORObject.NewArray().EncodeToBytes());
             obj.Add(CBORObject.NewMap());
             obj.Add(CBORObject.False);
             obj.Add(CBORObject.False);
@@ -185,7 +185,7 @@ namespace Com.AugustCellars.COSE.Tests
         public void macDecodeBadRecipients()
         {
             CBORObject obj = CBORObject.NewArray();
-            obj.Add(CBORObject.FromObject(CBORObject.NewArray()).EncodeToBytes());
+            obj.Add(CBORObject.NewArray().EncodeToBytes());
             obj.Add(CBORObject.NewMap());
             obj.Add(new byte[0]);
             obj.Add(CBORObject.False);

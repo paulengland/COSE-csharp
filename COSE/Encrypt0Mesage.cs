@@ -94,7 +94,7 @@ namespace Com.AugustCellars.COSE
             if (ProtectedMap.Count > 0) {
                 cbor.Add(ProtectedMap.EncodeToBytes());
             }
-            else cbor.Add(CBORObject.FromObject(new byte[0]));
+            else cbor.Add(CBORObject.FromByteArray(new byte[0]));
 
             cbor.Add(UnprotectedMap); // Add unprotected attributes
 

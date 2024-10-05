@@ -426,7 +426,7 @@ namespace Com.AugustCellars.COSE
             if (ProtectedMap.Count > 0) {
                 obj.Add(ProtectedMap.EncodeToBytes());
             }
-            else obj.Add(CBORObject.FromObject(new byte[0]));
+            else obj.Add(CBORObject.FromByteArray(new byte[0]));
 
             obj.Add(UnprotectedMap); // Add unprotected attributes
 
@@ -509,12 +509,12 @@ namespace Com.AugustCellars.COSE
                     if (objSalt == null) {
                         byte[] salt = new byte[10];
                         s_PRNG.NextBytes(salt);
-                        objSalt = CBORObject.FromObject(salt);
+                        objSalt = CBORObject.FromByteArray(salt);
                         AddAttribute("p2s", objSalt, UNPROTECTED);
                     }
                     objIterCount = FindAttribute("p2c");
                     if (objIterCount == null) {
-                        objIterCount = CBORObject.FromObject(8000);
+                        objIterCount = CBORObject.FromInt32(8000);
                         AddAttribute("p2c", objIterCount, UNPROTECTED);
                     }
                     rgbKey = PBKF2(m_key.AsBytes(CoseKeyParameterKeys.Octet_k), objSalt.GetByteString(), objIterCount.AsInt32(), 128 / 8, new Sha256Digest());
@@ -527,12 +527,12 @@ namespace Com.AugustCellars.COSE
                     if (objSalt == null) {
                         byte[] salt = new byte[10];
                         s_PRNG.NextBytes(salt);
-                        objSalt = CBORObject.FromObject(salt);
+                        objSalt = CBORObject.FromByteArray(salt);
                         AddAttribute("p2s", objSalt, UNPROTECTED);
                     }
                     objIterCount = FindAttribute("p2c");
                     if (objIterCount == null) {
-                        objIterCount = CBORObject.FromObject(8000);
+                        objIterCount = CBORObject.FromInt32(8000);
                         AddAttribute("p2c", objIterCount, UNPROTECTED);
                     }
                     rgbKey = PBKF2(m_key.AsBytes(CoseKeyParameterKeys.Octet_k), objSalt.GetByteString(), objIterCount.AsInt32(), 192 / 8, new Sha256Digest());
@@ -545,12 +545,12 @@ namespace Com.AugustCellars.COSE
                     if (objSalt == null) {
                         byte[] salt = new byte[10];
                         s_PRNG.NextBytes(salt);
-                        objSalt = CBORObject.FromObject(salt);
+                        objSalt = CBORObject.FromByteArray(salt);
                         AddAttribute("p2s", objSalt, UNPROTECTED);
                     }
                     objIterCount = FindAttribute("p2c");
                     if (objIterCount == null) {
-                        objIterCount = CBORObject.FromObject(8000);
+                        objIterCount = CBORObject.FromInt32(8000);
                         AddAttribute("p2c", objIterCount, UNPROTECTED);
                     }
                     rgbKey = PBKF2(m_key.AsBytes(CoseKeyParameterKeys.Octet_k), objSalt.GetByteString(), objIterCount.AsInt32(), 256 / 8, new Sha256Digest());
@@ -814,7 +814,7 @@ namespace Com.AugustCellars.COSE
                         if (FindAttribute(CoseKeyParameterKeys.HKDF_Context_PartyU_nonce) == null) {
                             byte[] rgbAPU = new byte[512 / 8];
                             s_PRNG.NextBytes(rgbAPU);
-                            AddAttribute(CoseKeyParameterKeys.HKDF_Context_PartyU_nonce, CBORObject.FromObject(rgbAPU), UNPROTECTED);
+                            AddAttribute(CoseKeyParameterKeys.HKDF_Context_PartyU_nonce, CBORObject.FromByteArray(rgbAPU), UNPROTECTED);
                         }
                         byte[] rgbSecret = ECDH_GenerateSecret(m_key);
                         return HKDF(rgbSecret, cbitKey, alg, new Sha256Digest());
@@ -825,7 +825,7 @@ namespace Com.AugustCellars.COSE
                         if (FindAttribute(CoseKeyParameterKeys.HKDF_Context_PartyU_nonce) == null) {
                             byte[] rgbAPU = new byte[512 / 8];
                             s_PRNG.NextBytes(rgbAPU);
-                            AddAttribute(CoseKeyParameterKeys.HKDF_Context_PartyU_nonce, CBORObject.FromObject(rgbAPU), UNPROTECTED);
+                            AddAttribute(CoseKeyParameterKeys.HKDF_Context_PartyU_nonce, CBORObject.FromByteArray(rgbAPU), UNPROTECTED);
                         }
                         byte[] rgbSecret = ECDH_GenerateSecret(m_key);
                         return HKDF(rgbSecret, cbitKey, alg, new Sha512Digest());
@@ -1025,7 +1025,7 @@ namespace Com.AugustCellars.COSE
                     epk.Add(CoseKeyParameterKeys.EC_X, pub.GetEncoded());
 
                     secretKey.Add(CoseKeyParameterKeys.OKP_Curve, m_key[CoseKeyParameterKeys.OKP_Curve]);
-                    secretKey.Add(CoseKeyParameterKeys.OKP_D, CBORObject.FromObject(((X25519PrivateKeyParameters) p1.Private).GetEncoded()));
+                    secretKey.Add(CoseKeyParameterKeys.OKP_D, CBORObject.FromByteArray(((X25519PrivateKeyParameters) p1.Private).GetEncoded()));
                     m_senderKey = secretKey;
                     break;
                 }
@@ -1042,7 +1042,7 @@ namespace Com.AugustCellars.COSE
 
                     secretKey.Add(CoseKeyKeys.KeyType, GeneralValues.KeyType_OKP);
                     secretKey.Add(CoseKeyParameterKeys.OKP_Curve, m_key[CoseKeyParameterKeys.OKP_Curve]);
-                    secretKey.Add(CoseKeyParameterKeys.OKP_D, CBORObject.FromObject(((X448PrivateKeyParameters)p1.Private).GetEncoded()));
+                    secretKey.Add(CoseKeyParameterKeys.OKP_D, CBORObject.FromByteArray(((X448PrivateKeyParameters)p1.Private).GetEncoded()));
                     m_senderKey = secretKey;
                     break;
                 }
@@ -1067,8 +1067,8 @@ namespace Com.AugustCellars.COSE
                         byte[] rgbEncoded = priv.Q.Normalize().GetEncoded(true);
                         byte[] X = new byte[rgbEncoded.Length - 1];
                         Array.Copy(rgbEncoded, 1, X, 0, X.Length);
-                        epk.Add(CoseKeyParameterKeys.EC_X, CBORObject.FromObject(X));
-                        epk.Add(CoseKeyParameterKeys.EC_Y, CBORObject.FromObject((rgbEncoded[0] & 1) == 1));
+                        epk.Add(CoseKeyParameterKeys.EC_X, CBORObject.FromByteArray(X));
+                        epk.Add(CoseKeyParameterKeys.EC_Y, CBORObject.FromBool((rgbEncoded[0] & 1) == 1));
                     }
                     else {
                         epk.Add(CoseKeyParameterKeys.EC_X,
@@ -1084,7 +1084,7 @@ namespace Com.AugustCellars.COSE
                     secretKey.Add(CoseKeyParameterKeys.EC_X, epk[CoseKeyParameterKeys.EC_X]);
                     secretKey.Add(CoseKeyParameterKeys.EC_Y, epk[CoseKeyParameterKeys.EC_Y]);
                     ECPrivateKeyParameters priv1 = (ECPrivateKeyParameters) p1.Private;
-                    secretKey.Add(CoseKeyParameterKeys.EC_D, CBORObject.FromObject(priv1.D.ToByteArrayUnsigned()));
+                    secretKey.Add(CoseKeyParameterKeys.EC_D, CBORObject.FromByteArray(priv1.D.ToByteArrayUnsigned()));
                     m_senderKey = secretKey;
                     break;
                 }
@@ -1166,7 +1166,7 @@ namespace Com.AugustCellars.COSE
                 default:
                     throw new CoseException("Not a supported Curve");
                 }
-                break;
+                //break;
 #endif
 
             case GeneralValuesInt.KeyType_EC2: {
@@ -1242,7 +1242,7 @@ namespace Com.AugustCellars.COSE
             //  fourth element is - Supplimental Public Info
             info = CBORObject.NewArray();
             contextArray.Add(info);
-            info.Add(CBORObject.FromObject(cbitKey));
+            info.Add(CBORObject.FromInt32(cbitKey));
             if (ProtectedMap.Count == 0) info.Add(new byte[0]);
             else info.Add(ProtectedMap.EncodeToBytes());
             obj = FindAttribute(CoseKeyParameterKeys.HKDF_SuppPub_Other);

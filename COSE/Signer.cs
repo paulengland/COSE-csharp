@@ -146,10 +146,10 @@ namespace Com.AugustCellars.COSE
         {
             CBORObject obj = CBORObject.NewArray();
 
-            CBORObject cborProtected = CBORObject.FromObject(new byte[0]);
+            CBORObject cborProtected = CBORObject.FromByteArray(new byte[0]);
             if ((ProtectedMap != null) && (ProtectedMap.Count > 0)) {
                 byte[] rgb = ProtectedMap.EncodeToBytes();
-                cborProtected = CBORObject.FromObject(rgb);
+                cborProtected = CBORObject.FromByteArray(rgb);
             }
 
             ProtectedBytes = cborProtected.GetByteString();
@@ -174,10 +174,10 @@ namespace Com.AugustCellars.COSE
 
         protected byte[] toBeSigned(byte[] rgbContent, byte[] bodyAttributes)
         {
-            CBORObject cborProtected = CBORObject.FromObject(new byte[0]);
+            CBORObject cborProtected = CBORObject.FromByteArray(new byte[0]);
             if ((ProtectedMap != null) && (ProtectedMap.Count > 0)) {
                 byte[] rgb = ProtectedMap.EncodeToBytes();
-                cborProtected = CBORObject.FromObject(rgb);
+                cborProtected = CBORObject.FromByteArray(rgb);
             }
 
             if (rgbContent == null) {
@@ -411,7 +411,7 @@ namespace Com.AugustCellars.COSE
                 case AlgorithmValuesInt.HSS_LMS:
                     HashSig sigHash = new HashSig(keyToSign[CoseKeyParameterKeys.Lms_Private].AsString());
                     byte[] signBytes = sigHash.Sign(toBeSigned);
-                    keyToSign.Replace(CoseKeyParameterKeys.Lms_Private, CBORObject.FromObject(sigHash.PrivateKey));
+                    keyToSign.Replace(CoseKeyParameterKeys.Lms_Private, CBORObject.FromString(sigHash.PrivateKey));
                     return signBytes;
 
                 default:

@@ -1,7 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <TargetFramework>net9.0</TargetFramework>
     <PackageId>Com.AugustCellars.JWT</PackageId>
     <Id>Com.AugustCellars.JWT</Id>
     <PackageVersion>1.2.0</PackageVersion>
@@ -11,14 +10,11 @@
     <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
     <Copyright>Copyright @2016-7 Jim Schaad</Copyright>
     <PackageTags>COSE CBOR</PackageTags>
-    
     <PackageReleaseNotes>
     Don't release me
     </PackageReleaseNotes>
-    
     <Configurations>Debug;Release</Configurations>
   </PropertyGroup>
-
   <PropertyGroup>
     <EnableDefaultItems>false</EnableDefaultItems>
     <AssemblyName>JWT</AssemblyName>
@@ -30,28 +26,18 @@
     <IntermediateOutputPath>obj\dev\Debug</IntermediateOutputPath>
     <OutputPath>bin\dev\Debug\</OutputPath>
   </PropertyGroup>
-  
-
   <ItemGroup>
     <Compile Include="JWT.cs" />
     <Compile Include="JwtException.cs" />
   </ItemGroup>
-  
-
   <ItemGroup>
     <PackageReference Include="PeterO.Cbor" Version="4.0.1" />
   </ItemGroup>
-  
-
   <ItemGroup>
     <Folder Include="Properties\" />
   </ItemGroup>
-  
-
   <ItemGroup>
     <ProjectReference Include="..\..\..\Bouncy-Castle\bc-csharp\crypto\crypto.csproj" />
     <ProjectReference Include="..\JOSE\JOSE.dev.csproj" />
   </ItemGroup>
-  
-
 </Project>

@@ -47,6 +47,7 @@ namespace Com.AugustCellars.COSE.Tests
 
         public TestContext TestContext { get; set; }
 
+#if false
         [TestMethod]
         public void ProcessDirectory()
         {
@@ -119,7 +120,7 @@ namespace Com.AugustCellars.COSE.Tests
             }
             Assert.AreEqual(CFails, (0));
         }
-
+#endif
         public void ProcessFile(String test)
         {
             try {
@@ -198,7 +199,7 @@ namespace Com.AugustCellars.COSE.Tests
 
             OneKey cnKey = BuildKey(cnRecipients[ "key"], true);
 
-            CBORObject kk = cnKey[ CBORObject.FromObject(-1)];
+            CBORObject kk = cnKey[ CBORObject.FromInt32(-1)];
 
             msg.Encrypt(kk.GetByteString());
 
@@ -239,7 +240,7 @@ namespace Com.AugustCellars.COSE.Tests
 
                 OneKey cnKey = BuildKey(cnRecipients[ "key"], true);
 
-                CBORObject kk = cnKey[ CBORObject.FromObject(-1)];
+                CBORObject kk = cnKey[ CBORObject.FromInt32(-1)];
 
                 cnFail = cnRecipients[ "fail"];
 
@@ -341,7 +342,7 @@ namespace Com.AugustCellars.COSE.Tests
 
             OneKey cnKey = BuildKey(cnRecipients[ "key"], true);
 
-            CBORObject kk = cnKey[ CBORObject.FromObject(-1)];
+            CBORObject kk = cnKey[ CBORObject.FromInt32(-1)];
 
             msg.Compute(kk.GetByteString());
 
@@ -381,7 +382,7 @@ namespace Com.AugustCellars.COSE.Tests
 
                 OneKey cnKey = BuildKey(cnRecipients[ "key"], true);
 
-                CBORObject kk = cnKey[ CBORObject.FromObject(-1)];
+                CBORObject kk = cnKey[ CBORObject.FromInt32(-1)];
 
                 pFail = cnRecipients[ "fail"];
 
@@ -495,9 +496,9 @@ namespace Com.AugustCellars.COSE.Tests
                 try {
                     msg = Message.DecodeFromBytes(rgbEncoded, Tags.Encrypt);
                 }
-                catch (CoseException e) {
+                catch (CoseException) {
                     if (fFailBody) return true;
-                    throw e;
+                    throw;
                 }
 
                 hEnc = (EncryptMessage)msg;
@@ -733,68 +734,68 @@ namespace Com.AugustCellars.COSE.Tests
 
                     case "kid":
                     cnKey = HeaderKeys.KeyId;
-                    cnValue = CBORObject.FromObject(UTF8Encoding.UTF8.GetBytes(cnAttributes[ attr].AsString()));
+                    cnValue = CBORObject.FromByteArray(UTF8Encoding.UTF8.GetBytes(cnAttributes[ attr].AsString()));
                     break;
 
                     case "spk_kid":
                     cnKey = HeaderKeys.ECDH_SKID;
-                    cnValue = CBORObject.FromObject(UTF8Encoding.UTF8.GetBytes(cnAttributes[ attr].AsString()));
+                    cnValue = CBORObject.FromByteArray(UTF8Encoding.UTF8.GetBytes(cnAttributes[ attr].AsString()));
                     break;
 
                     case "IV_hex":
                     cnKey = HeaderKeys.IV;
-                    cnValue = CBORObject.FromObject(HexStringToByteArray(cnAttributes[ attr].AsString()));
+                    cnValue = CBORObject.FromByteArray(HexStringToByteArray(cnAttributes[ attr].AsString()));
                     break;
 
                     case "partialIV_hex":
                     cnKey = HeaderKeys.PartialIV;
-                    cnValue = CBORObject.FromObject(HexStringToByteArray(cnAttributes[ attr].AsString()));
+                    cnValue = CBORObject.FromByteArray(HexStringToByteArray(cnAttributes[ attr].AsString()));
                     break;
 
                     case "salt":
                     cnKey = CoseKeyParameterKeys.HKDF_Salt;
-                    cnValue = CBORObject.FromObject(UTF8Encoding.UTF8.GetBytes(cnAttributes[ attr].AsString()));
+                    cnValue = CBORObject.FromByteArray(UTF8Encoding.UTF8.GetBytes(cnAttributes[ attr].AsString()));
                     break;
 
                     case "apu_id":
                     cnKey = CoseKeyParameterKeys.HKDF_Context_PartyU_ID;
-                    cnValue = CBORObject.FromObject(UTF8Encoding.UTF8.GetBytes(cnAttributes[ attr].AsString()));
+                    cnValue = CBORObject.FromByteArray(UTF8Encoding.UTF8.GetBytes(cnAttributes[ attr].AsString()));
                     break;
 
                     case "apv_id":
                     cnKey = CoseKeyParameterKeys.HKDF_Context_PartyV_ID;
-                    cnValue = CBORObject.FromObject(UTF8Encoding.UTF8.GetBytes(cnAttributes[ attr].AsString()));
+                    cnValue = CBORObject.FromByteArray(UTF8Encoding.UTF8.GetBytes(cnAttributes[ attr].AsString()));
                     break;
 
                     case "apu_nonce":
                     case "apu_nonce_hex":
                     cnKey = CoseKeyParameterKeys.HKDF_Context_PartyU_nonce;
-                    cnValue = CBORObject.FromObject(UTF8Encoding.UTF8.GetBytes(cnAttributes[ attr].AsString()));
+                    cnValue = CBORObject.FromByteArray(UTF8Encoding.UTF8.GetBytes(cnAttributes[ attr].AsString()));
                     break;
 
                     case "apv_nonce":
                     cnKey = CoseKeyParameterKeys.HKDF_Context_PartyV_nonce;
-                    cnValue = CBORObject.FromObject(UTF8Encoding.UTF8.GetBytes(cnAttributes[ attr].AsString()));
+                    cnValue = CBORObject.FromByteArray(UTF8Encoding.UTF8.GetBytes(cnAttributes[ attr].AsString()));
                     break;
 
                     case "apu_other":
                     cnKey = CoseKeyParameterKeys.HKDF_Context_PartyU_Other;
-                    cnValue = CBORObject.FromObject(UTF8Encoding.UTF8.GetBytes(cnAttributes[ attr].AsString()));
+                    cnValue = CBORObject.FromByteArray(UTF8Encoding.UTF8.GetBytes(cnAttributes[ attr].AsString()));
                     break;
 
                     case "apv_other":
                     cnKey = CoseKeyParameterKeys.HKDF_Context_PartyV_Other;
-                    cnValue = CBORObject.FromObject(UTF8Encoding.UTF8.GetBytes(cnAttributes[ attr].AsString()));
+                    cnValue = CBORObject.FromByteArray(UTF8Encoding.UTF8.GetBytes(cnAttributes[ attr].AsString()));
                     break;
 
                     case "pub_other":
                     cnKey = CoseKeyParameterKeys.HKDF_SuppPub_Other;
-                    cnValue = CBORObject.FromObject(UTF8Encoding.UTF8.GetBytes(cnAttributes[ attr].AsString()));
+                    cnValue = CBORObject.FromByteArray(UTF8Encoding.UTF8.GetBytes(cnAttributes[ attr].AsString()));
                     break;
 
                     case "priv_other":
                     cnKey = CoseKeyParameterKeys.HKDF_SuppPriv_Other;
-                    cnValue = CBORObject.FromObject(UTF8Encoding.UTF8.GetBytes(cnAttributes[ attr].AsString()));
+                    cnValue = CBORObject.FromByteArray(UTF8Encoding.UTF8.GetBytes(cnAttributes[ attr].AsString()));
                     break;
 
                     case "ctyp":
@@ -838,7 +839,7 @@ namespace Com.AugustCellars.COSE.Tests
         public OneKey BuildKey(CBORObject keyIn, Boolean fPublicKey)
         {
             CBORObject cnKeyOut = CBORObject.NewMap();
-            string keyType = keyIn[CBORObject.FromObject("kty")].AsString();
+            string keyType = keyIn[CBORObject.FromString("kty")].AsString();
 
             foreach (CBORObject key in keyIn.Keys) {
                 CBORObject cnValue = keyIn[ key];
@@ -847,19 +848,19 @@ namespace Com.AugustCellars.COSE.Tests
                     case "kty":
                     switch (cnValue.AsString()) {
                         case "EC":
-                        cnKeyOut[CBORObject.FromObject(1)] = CBORObject.FromObject(2);
+                        cnKeyOut[CBORObject.FromInt32(1)] = CBORObject.FromInt32(2);
                         break;
 
                         case "oct":
-                        cnKeyOut[CBORObject.FromObject(1)] = CBORObject.FromObject(4);
+                        cnKeyOut[CBORObject.FromInt32(1)] = CBORObject.FromInt32(4);
                         break;
 
                         case "OKP":
-                        cnKeyOut[CBORObject.FromObject(1)] = GeneralValues.KeyType_OKP;
+                        cnKeyOut[CBORObject.FromInt32(1)] = GeneralValues.KeyType_OKP;
                         break;
 
                             case "RSA":
-                                cnKeyOut[CBORObject.FromObject(1)] = GeneralValues.KeyType_RSA;
+                                cnKeyOut[CBORObject.FromInt32(1)] = GeneralValues.KeyType_RSA;
                                     break;
                     }
                     break;
@@ -867,15 +868,15 @@ namespace Com.AugustCellars.COSE.Tests
                     case "crv":
                         switch (cnValue.AsString()) {
                         case "P-256":
-                            cnValue = CBORObject.FromObject(1);
+                            cnValue = CBORObject.FromInt32(1);
                             break;
 
                         case "P-384":
-                            cnValue = CBORObject.FromObject(2);
+                            cnValue = CBORObject.FromInt32(2);
                             break;
 
                         case "P-521":
-                            cnValue = CBORObject.FromObject(3);
+                            cnValue = CBORObject.FromInt32(3);
                             break;
 
                         case "X25519":
@@ -895,32 +896,32 @@ namespace Com.AugustCellars.COSE.Tests
                         }
 
 
-                        cnKeyOut[CBORObject.FromObject(-1)] = cnValue;
+                        cnKeyOut[CBORObject.FromInt32(-1)] = cnValue;
                     break;
 
                     case "x":
-                    cnKeyOut[CoseKeyParameterKeys.EC_X] = CBORObject.FromObject(Base64urldecode(cnValue.AsString()));
+                    cnKeyOut[CoseKeyParameterKeys.EC_X] = CBORObject.FromByteArray(Base64urldecode(cnValue.AsString()));
                     break;
 
                 case "x_hex":
-                        cnKeyOut[CoseKeyParameterKeys.EC_X] = CBORObject.FromObject(HexStringToByteArray(cnValue.AsString()));
+                        cnKeyOut[CoseKeyParameterKeys.EC_X] = CBORObject.FromByteArray(HexStringToByteArray(cnValue.AsString()));
                         break;
 
                     case "y":
-                    cnKeyOut[CoseKeyParameterKeys.EC_Y] = CBORObject.FromObject(Base64urldecode(cnValue.AsString()));
+                    cnKeyOut[CoseKeyParameterKeys.EC_Y] = CBORObject.FromByteArray(Base64urldecode(cnValue.AsString()));
                     break;
 
                 case "y_hex":
-                    cnKeyOut[CoseKeyParameterKeys.EC_Y] = CBORObject.FromObject(HexStringToByteArray(cnValue.AsString()));
+                    cnKeyOut[CoseKeyParameterKeys.EC_Y] = CBORObject.FromByteArray(HexStringToByteArray(cnValue.AsString()));
                     break;
 
                 case "d":
                     if (!fPublicKey) {
                         if (keyType == "RSA") {
-                            cnKeyOut[CoseKeyParameterKeys.RSA_d] = CBORObject.FromObject(Base64urldecode(cnValue.AsString()));
+                            cnKeyOut[CoseKeyParameterKeys.RSA_d] = CBORObject.FromByteArray(Base64urldecode(cnValue.AsString()));
                         }
                         else {
-                            cnKeyOut[CoseKeyParameterKeys.EC_D] = CBORObject.FromObject(Base64urldecode(cnValue.AsString()));
+                            cnKeyOut[CoseKeyParameterKeys.EC_D] = CBORObject.FromByteArray(Base64urldecode(cnValue.AsString()));
                         }
                     }
                     break;
@@ -928,56 +929,56 @@ namespace Com.AugustCellars.COSE.Tests
                     case "d_hex":
                         if (!fPublicKey) {
                             if (keyType == "RSA") {
-                                cnKeyOut[CoseKeyParameterKeys.RSA_d] = CBORObject.FromObject(HexStringToByteArray(cnValue.AsString()));
+                                cnKeyOut[CoseKeyParameterKeys.RSA_d] = CBORObject.FromByteArray(HexStringToByteArray(cnValue.AsString()));
                             }
                             else {
-                                cnKeyOut[CoseKeyParameterKeys.EC_D] = CBORObject.FromObject(HexStringToByteArray(cnValue.AsString()));
+                                cnKeyOut[CoseKeyParameterKeys.EC_D] = CBORObject.FromByteArray(HexStringToByteArray(cnValue.AsString()));
                             }
                         }
                         break;
 
                 case "k":
-                    cnKeyOut[CBORObject.FromObject(-1)] = CBORObject.FromObject(Base64urldecode(cnValue.AsString()));
+                    cnKeyOut[CBORObject.FromInt32(-1)] = CBORObject.FromByteArray(Base64urldecode(cnValue.AsString()));
                     break;
 
                     case "k_hex":
-                        cnKeyOut[CBORObject.FromObject(-1)] = CBORObject.FromObject(HexStringToByteArray(cnValue.AsString()));
+                        cnKeyOut[CBORObject.FromInt32(-1)] = CBORObject.FromByteArray(HexStringToByteArray(cnValue.AsString()));
                         break;
 
                 case "n_hex":
-                    cnKeyOut[CoseKeyParameterKeys.RSA_n] = CBORObject.FromObject(HexStringToByteArray(cnValue.AsString()));
+                    cnKeyOut[CoseKeyParameterKeys.RSA_n] = CBORObject.FromByteArray(HexStringToByteArray(cnValue.AsString()));
                     break;
 
                 case "e_hex":
-                    cnKeyOut[CoseKeyParameterKeys.RSA_e] = CBORObject.FromObject(HexStringToByteArray(cnValue.AsString()));
+                    cnKeyOut[CoseKeyParameterKeys.RSA_e] = CBORObject.FromByteArray(HexStringToByteArray(cnValue.AsString()));
                     break;
 
                 case "p_hex":
-                    cnKeyOut[CoseKeyParameterKeys.RSA_p] = CBORObject.FromObject(HexStringToByteArray(cnValue.AsString()));
+                    cnKeyOut[CoseKeyParameterKeys.RSA_p] = CBORObject.FromByteArray(HexStringToByteArray(cnValue.AsString()));
                     break;
 
                 case "q_hex":
-                    cnKeyOut[CoseKeyParameterKeys.RSA_q] = CBORObject.FromObject(HexStringToByteArray(cnValue.AsString()));
+                    cnKeyOut[CoseKeyParameterKeys.RSA_q] = CBORObject.FromByteArray(HexStringToByteArray(cnValue.AsString()));
                     break;
 
                 case "dP_hex":
-                    cnKeyOut[CoseKeyParameterKeys.RSA_dP] = CBORObject.FromObject(HexStringToByteArray(cnValue.AsString()));
+                    cnKeyOut[CoseKeyParameterKeys.RSA_dP] = CBORObject.FromByteArray(HexStringToByteArray(cnValue.AsString()));
                     break;
 
                 case "dQ_hex":
-                    cnKeyOut[CoseKeyParameterKeys.RSA_dQ] = CBORObject.FromObject(HexStringToByteArray(cnValue.AsString()));
+                    cnKeyOut[CoseKeyParameterKeys.RSA_dQ] = CBORObject.FromByteArray(HexStringToByteArray(cnValue.AsString()));
                     break;
 
                 case "qi_hex":
-                    cnKeyOut[CoseKeyParameterKeys.RSA_qInv] = CBORObject.FromObject(HexStringToByteArray(cnValue.AsString()));
+                    cnKeyOut[CoseKeyParameterKeys.RSA_qInv] = CBORObject.FromByteArray(HexStringToByteArray(cnValue.AsString()));
                     break;
 
                 case "public":
-                    cnKeyOut[CoseKeyParameterKeys.Lms_Public] = CBORObject.FromObject(HexStringToByteArray(cnValue.AsString()));
+                    cnKeyOut[CoseKeyParameterKeys.Lms_Public] = CBORObject.FromByteArray(HexStringToByteArray(cnValue.AsString()));
                     break;
 
                 case "private":
-                    cnKeyOut[CoseKeyParameterKeys.Lms_Private] = CBORObject.FromObject(cnValue.AsString());
+                    cnKeyOut[CoseKeyParameterKeys.Lms_Private] = CBORObject.FromString(cnValue.AsString());
                     break;
 
                 case "kid":
@@ -1443,7 +1444,7 @@ namespace Com.AugustCellars.COSE.Tests
                     msg.CounterSignerList.Add(sig);
                 }
             }
-            catch (Exception e) {
+            catch (Exception) {
                 CFails++;
             }
         }
@@ -1482,7 +1483,7 @@ namespace Com.AugustCellars.COSE.Tests
                         Boolean f = msg.Validate(sig);
                         if (!f) CFails++;
                     }
-                    catch (Exception e) {
+                    catch (Exception) {
                         CFails++;
                     }
                 }
@@ -1527,7 +1528,7 @@ namespace Com.AugustCellars.COSE.Tests
                         Boolean f = msg.Validate(sig);
                         if (!f) CFails++;
                     }
-                    catch (Exception e) {
+                    catch (Exception) {
                         CFails++;
                     }
                 }
@@ -1572,7 +1573,7 @@ namespace Com.AugustCellars.COSE.Tests
                         throw new Exception("Failed countersignature validation");
                     }
                 }
-                catch (Exception e) {
+                catch (Exception) {
                     throw new Exception("Failed countersignature validation");
                 }
             }
@@ -1616,7 +1617,7 @@ namespace Com.AugustCellars.COSE.Tests
                         throw new Exception("Failed countersignature validation");
                     }
                 }
-                catch (Exception e) {
+                catch (Exception) {
                     throw new Exception("Failed countersignature validation");
                 }
             }

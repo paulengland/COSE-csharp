@@ -435,7 +435,7 @@ namespace Com.AugustCellars.COSE
                     throw new CoseException("Key type unrecognized");
             }
             else {
-                switch ((GeneralValuesInt) _map[CoseKeyKeys.KeyType].AsInt16()) {
+                switch ((GeneralValuesInt) _map[CoseKeyKeys.KeyType].AsInt32()) {
                 case GeneralValuesInt.KeyType_Octet:
                     return null;
 
@@ -546,7 +546,7 @@ namespace Com.AugustCellars.COSE
                 ECPrivateKeyParameters priv = (ECPrivateKeyParameters) x;
                 Add(CoseKeyKeys.KeyType, GeneralValues.KeyType_EC);
                 Add(CoseKeyParameterKeys.EC_Curve, GeneralValues.P256); //  algs[priv.PublicKeyParamSet.Id]);
-                Add(CoseKeyParameterKeys.EC_D, CBORObject.FromObject(priv.D.ToByteArrayUnsigned()));
+                Add(CoseKeyParameterKeys.EC_D, CBORObject.FromByteArray(priv.D.ToByteArrayUnsigned()));
                 PrivateKey = x;
             }
             else if (x is ECPublicKeyParameters) {

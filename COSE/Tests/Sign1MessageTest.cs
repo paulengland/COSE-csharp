@@ -60,7 +60,7 @@ namespace Com.AugustCellars.COSE.Tests
         {
             Sign1Message msg = new Sign1Message();
 
-            msg.AddAttribute(HeaderKeys.Algorithm, CBORObject.FromObject("Unknown"), Attributes.PROTECTED);
+            msg.AddAttribute(HeaderKeys.Algorithm, CBORObject.FromString("Unknown"), Attributes.PROTECTED);
             msg.SetContent(rgbContent);
             CoseException e = Assert.ThrowsException<CoseException>(() =>
                 msg.Sign(cnKeyPrivate));
@@ -160,7 +160,7 @@ namespace Com.AugustCellars.COSE.Tests
         public void decodeBadProtected2()
         {
             CBORObject obj = CBORObject.NewArray();
-            obj.Add(CBORObject.FromObject(CBORObject.False.EncodeToBytes()));
+            obj.Add(CBORObject.FromByteArray(CBORObject.False.EncodeToBytes()));
             obj.Add(CBORObject.False);
             obj.Add(CBORObject.False);
             obj.Add(CBORObject.False);
@@ -176,7 +176,7 @@ namespace Com.AugustCellars.COSE.Tests
         public void decodeBadUnprotected()
         {
             CBORObject obj = CBORObject.NewArray();
-            obj.Add(CBORObject.FromObject(CBORObject.NewArray()).EncodeToBytes());
+            obj.Add(CBORObject.NewArray().EncodeToBytes());
             obj.Add(CBORObject.False);
             obj.Add(CBORObject.False);
             obj.Add(CBORObject.False);
@@ -191,7 +191,7 @@ namespace Com.AugustCellars.COSE.Tests
         public void decodeBadContent()
         {
             CBORObject obj = CBORObject.NewArray();
-            obj.Add(CBORObject.FromObject(CBORObject.NewArray()).EncodeToBytes());
+            obj.Add(CBORObject.NewArray().EncodeToBytes());
             obj.Add(CBORObject.NewMap());
             obj.Add(CBORObject.False);
             obj.Add(CBORObject.False);
@@ -207,7 +207,7 @@ namespace Com.AugustCellars.COSE.Tests
         public void decodeBadSignature()
         {
             CBORObject obj = CBORObject.NewArray();
-            obj.Add(CBORObject.FromObject(CBORObject.NewArray()).EncodeToBytes());
+            obj.Add(CBORObject.NewArray().EncodeToBytes());
             obj.Add(CBORObject.NewMap());
             obj.Add(new byte[0]);
             obj.Add(CBORObject.False);
